@@ -12,6 +12,7 @@ class Login {
 
         $result = Db::name('teacher')
             ->where($where)
+            ->field('tc_id, tc_name, tc_avatar')
             ->find();
 
         if($result) {
