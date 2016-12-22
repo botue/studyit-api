@@ -5,6 +5,8 @@ use think\Request;
 use think\Db;
 
 class Login {
+
+    // 登录
     public function index(Request $request) {
         // 登录信息
         $where['tc_name'] = $request->param('tc_name');
@@ -12,22 +14,27 @@ class Login {
 
         $result = Db::name('teacher')
             ->where($where)
-            ->field('tc_name, tc_avatar')
+            ->field('tc_id, tc_name, tc_pass, tc_type, tc_avatar')
             ->find();
 
         if($result) {
             // 记录session信息
             session('loginfo', $result);
 
+            $data = [
+                'tc_name' => $result['tc_name'],
+                'tc_avatar' => $result['tc_avatar']
+            ];
+
             return json([
                 'code' => 200,
                 'msg' => '登录成功!',
-                'result' => $result,
+                'result' => $data,
                 'time' => time()
             ]);
 
         } else {
-            abort(404, '用户名或密码错误!');
+            abort(404, 'Not Found');
         }
 
     }

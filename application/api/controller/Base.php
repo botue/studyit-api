@@ -13,7 +13,7 @@ class Base extends Controller {
         $session = $this->request->session();
 
         if(!isset($session['loginfo'])) {
-            abort(401, '未登录');
+            abort(401, 'Unauthorized');
         }
     }
 }

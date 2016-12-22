@@ -2,23 +2,28 @@
 namespace app\api\controller;
 
 use think\Db;
-use think\Request;
+use think\Controller;
 use app\api\controller\Base;
 
 class Category extends Base {
-
+    // 分类列表
     public function index() {
-        $data = Db::name('category')->select();
+        $result = Db::name('category')->select();
 
-        $tree = $this->tree($data, 0, 0);
+        if($result) {
+            $tree = $this->tree($result, 0, 0);
 
-        return json([
-            'code' => 200,
-            'msg' => 'ok',
-            'result' => $tree
-        ]);
+            return json([
+                'code' => 200,
+                'msg' => 'OK',
+                'result' => $tree
+            ]);
+        }
+
+        abort(500, 'Internal Server Error');
     }
 
+    // 数据处理
     protected function tree($arr, $pid, $lev) {
         static $tree;
         foreach($arr as $row) {
@@ -30,4 +35,28 @@ class Category extends Base {
         }
         return $tree;
     }
+
+    // 添加分类
+    public function add() {
+        // 获取参数
+        $param = $this->request->param();
+
+        $result = Db::name('category')
+            ->insert($param);
+
+        if($result) {
+            return json([
+                'code' => 200,
+                'msg' => 'OK',
+                'time' => time()
+            ]);
+        }
+
+        abort(500, 'Internal Server Error');
+    }
 }
+
+
+
+
+
