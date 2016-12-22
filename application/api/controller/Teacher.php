@@ -23,7 +23,7 @@ class Teacher extends Base {
 
         // 查询讲师列表
         $result = Db::name('teacher')
-            ->field('tc_id, tc_name, tc_roster, tc_gender, tc_cellphone, tc_email, tc_status, tc_brithday, tc_join_date')
+            ->field('tc_id, tc_name, tc_roster, tc_gender, tc_cellphone, tc_email, tc_status, tc_birthday, tc_join_date')
             ->where('tc_type', '<>', 0)
             ->select();
 
@@ -97,7 +97,7 @@ class Teacher extends Base {
         $tc_id = $this->request->param('tc_id');
 
         $result = Db::name('teacher')
-            ->field('tc_id, tc_name, tc_roster, tc_brithday, tc_join_date, tc_type, tc_gender, tc_cellphone, tc_email, tc_hometown, tc_introduce')
+            ->field('tc_id, tc_name, tc_roster, tc_birthday, tc_join_date, tc_type, tc_gender, tc_cellphone, tc_email, tc_hometown, tc_introduce')
             ->where(['tc_id' => $tc_id])
             ->find();
 
