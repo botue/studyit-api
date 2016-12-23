@@ -28,10 +28,22 @@ class Teacher extends Base {
             ->select();
 
         if($result) {
+
+            // 数据格式处理
+            foreach ($result as $key => $value) {
+                $tc_birthday = $value['tc_birthday'];
+                $tc_join_date = $value['tc_join_date'];
+
+                $value['tc_birthday'] = date('Y-m-d', $tc_birthday);
+                $value['tc_join_date'] = date('Y-m-d', $tc_join_date);
+
+                $data[] = $value;
+            }
+
             return json([
                 'code' => 200,
                 'msg' => 'OK',
-                'result' => $result
+                'result' => $data
             ]);
         }
 
@@ -72,11 +84,14 @@ class Teacher extends Base {
         $tc_id = $this->request->param('tc_id');
 
         $result = Db::name('teacher')
-            ->field('tc_id, tc_name, tc_pass, tc_join_date, tc_type, tc_gender')
+            ->field('tc_id, tc_name, tc_join_date, tc_type, tc_gender')
             ->where(['tc_id' => $tc_id])
             ->find();
 
         if($result) {
+            // 日期格式处理
+            $result['tc_join_date'] = date('Y-m-d', $result['tc_join_date']);
+
             return json([
                 'code' => 200,
                 'msg' => 'OK',
@@ -102,6 +117,10 @@ class Teacher extends Base {
             ->find();
 
         if($result) {
+
+            $result['tc_birthday'] = date('Y-m-d', $result['tc_birthday']);
+            $result['tc_join_date'] = date('Y-m-d', $result['tc_join_date']);
+
             return json([
                 'code' => 200,
                 'msg' => 'OK',
