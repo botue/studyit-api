@@ -8,12 +8,31 @@ use app\api\controller\Base;
 class Teacher extends Base {
     // 权限检测
     protected function checkType() {
-        // 判断讲师类型
+        // 是否为管理员
         $tc_type = $this->request->session()['loginfo']['tc_type'];
 
         if($tc_type) {
             return abort(403, 'Forbidden');
         }        
+    }
+
+    // 根据id查看讲师信息
+    protected function find($tc_id) {
+
+        $result = Db::name('teacher')
+            ->field('tc_pass, tc_type, tc_status, tc_update_time', true)
+            ->where(['tc_id' => $tc_id])
+            ->find();
+
+        if($result) {
+
+            $result['tc_birthday'] = date('Y-m-d', $result['tc_birthday']);
+            $result['tc_join_date'] = date('Y-m-d', $result['tc_join_date']);
+
+            return $result;
+        }
+
+        abort(500, 'Internal Server Error');
     }
 
     // 讲师列表
@@ -59,6 +78,8 @@ class Teacher extends Base {
         $param = $this->request->param();
         // md5加密
         $param['tc_pass'] = md5($param['tc_pass']);
+        // 将字符串转时间戳
+        $param['tc_join_date'] = strtotime($param['tc_join_date']);
 
         // 存入数据库
         $result = Db::name('teacher')
@@ -111,25 +132,14 @@ class Teacher extends Base {
         // 讲师id
         $tc_id = $this->request->param('tc_id');
 
-        $result = Db::name('teacher')
-            ->field('tc_id, tc_name, tc_roster, tc_birthday, tc_join_date, tc_type, tc_gender, tc_cellphone, tc_email, tc_hometown, tc_introduce')
-            ->where(['tc_id' => $tc_id])
-            ->find();
+        $result = $this->find($tc_id);
 
-        if($result) {
-
-            $result['tc_birthday'] = date('Y-m-d', $result['tc_birthday']);
-            $result['tc_join_date'] = date('Y-m-d', $result['tc_join_date']);
-
-            return json([
-                'code' => 200,
-                'msg' => 'OK',
-                'result' => $result,
-                'time' => time()
-            ]);
-        }
-
-        abort(500, 'Internal Server Error');
+        return json([
+            'code' => 200,
+            'msg' => 'OK',
+            'result' => $result,
+            'time' => time()
+        ]);
     }
 
     // 注销/启用讲师
@@ -152,6 +162,7 @@ class Teacher extends Base {
             return json([
                 'code' => 200,
                 'msg' => 'OK',
+                'result' => ['tc_status' => $status],
                 'time' => time()
             ]);
         }
@@ -172,7 +183,7 @@ class Teacher extends Base {
         // 获取参数
         $param = $this->request->param();
 
-        $tc_id = $param['tc_id'];
+        $tc_id = intval($param['tc_id']);
 
         unset($param['tc_id']);
 
@@ -180,6 +191,9 @@ class Teacher extends Base {
         if($tc_login_id != $tc_id && $tc_type != 0) {
             return abort(403, 'Forbidden');
         }
+
+        // 将字符串转时间戳
+        $param['tc_join_date'] = strtotime($param['tc_join_date']);
 
         // 写放数据库
         $result = Db::name('teacher')
@@ -195,6 +209,21 @@ class Teacher extends Base {
         }
 
         abort(500, 'Internal Server Error');
+    }
+
+    // 用户中心设置
+    public function profile() {
+        // 登录id
+        $tc_id = $this->request->session()['loginfo']['tc_id'];
+
+        $result = $this->find($tc_id);
+
+        return json([
+            'code' => 200,
+            'msg' => 'OK',
+            'result' => $result,
+            'time' => time()
+        ]);
     }
 
     // 修改密码

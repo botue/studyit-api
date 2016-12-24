@@ -31,14 +31,4 @@ class Dashboard extends Base {
         return json($data);
     }
 
-    public function settings(Request $request) {
-
-        $data = Db::name('teacher')->find(1);
-        
-        return json($data);
-    }
-
-    public function repass() {
-        return json(['msg' => '修改密码']);
-    }
 }
