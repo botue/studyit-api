@@ -11,6 +11,7 @@ class Login {
         // 登录信息
         $where['tc_name'] = $request->param('tc_name');
         $where['tc_pass'] = md5($request->param('tc_pass'));
+        $where['tc_status'] = 0;
 
         $result = Db::name('teacher')
             ->where($where)

@@ -194,6 +194,7 @@ class Teacher extends Base {
 
         // 将字符串转时间戳
         $param['tc_join_date'] = strtotime($param['tc_join_date']);
+        $param['tc_birthday'] = strtotime($param['tc_birthday']);
 
         // 写放数据库
         $result = Db::name('teacher')
