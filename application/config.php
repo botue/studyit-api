@@ -229,4 +229,11 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+
+    'oss' => [
+        'accessKeyId' => 'NY69ztW4JDV9EZt9',
+        'accessKeySecret' => '3aATbljzLT4VsnJbKBB6vK8FqiCFl4',
+        'endpoint' => 'http://static.botue.com',
+        'avatar' => 'images/avatar/'
+    ]
 ];

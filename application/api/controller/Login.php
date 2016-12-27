@@ -19,6 +19,9 @@ class Login {
             ->find();
 
         if($result) {
+
+            $result['tc_avatar'] = 'http://static.botue.com/images/avatar/' . $result['tc_avatar'];
+
             // 记录session信息
             session('loginfo', $result);
 

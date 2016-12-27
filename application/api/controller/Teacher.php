@@ -217,7 +217,15 @@ class Teacher extends Base {
         // 登录id
         $tc_id = $this->request->session()['loginfo']['tc_id'];
 
-        $result = $this->find($tc_id);
+        $result = Db::name('teacher')
+            ->field('tc_pass, tc_status, tc_type, tc_update_time', true)
+            ->find($tc_id);
+
+        $result['tc_avatar'] = 'http://static.botue.com/images/avatar/' . $result['tc_avatar'];
+
+        $result['tc_birthday'] = date('Y-m-d', $result['tc_birthday']);
+
+        $result['tc_join_date'] = date('Y-m-d', $result['tc_join_date']);
 
         return json([
             'code' => 200,
