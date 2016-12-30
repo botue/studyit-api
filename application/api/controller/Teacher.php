@@ -132,14 +132,29 @@ class Teacher extends Base {
         // 讲师id
         $tc_id = $this->request->param('tc_id');
 
-        $result = $this->find($tc_id);
+        $result = Db::name('teacher')
+            ->field('tc_update_time, tc_type, tc_province, tc_city, tc_district', true)
+            ->find($tc_id);
 
-        return json([
-            'code' => 200,
-            'msg' => 'OK',
-            'result' => $result,
-            'time' => time()
-        ]);
+        if($result) {
+
+            $tc_birthday = $result['tc_birthday'];
+            $tc_join_date = $result['tc_join_date'];
+            $tc_avatar = $result['tc_avatar'];
+
+            $result['tc_birthday'] = date('Y-m-d', $tc_birthday);
+            $result['tc_join_date'] = date('Y-m-d', $tc_join_date);
+            $result['tc_avatar'] = 'http://static.botue.com/images/avatar/' . $tc_avatar;
+
+            return json([
+                'code' => 200,
+                'msg' => 'OK',
+                'result' => $result,
+                'time' => time()
+            ]);            
+        }
+
+        abort(500, 'Internal Server Error');
     }
 
     // 注销/启用讲师
