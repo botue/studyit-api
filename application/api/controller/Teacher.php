@@ -144,7 +144,10 @@ class Teacher extends Base {
 
             $result['tc_birthday'] = date('Y-m-d', $tc_birthday);
             $result['tc_join_date'] = date('Y-m-d', $tc_join_date);
-            $result['tc_avatar'] = 'http://static.botue.com/images/avatar/' . $tc_avatar;
+
+            if($tc_avatar) {
+                $result['tc_avatar'] = 'http://static.botue.com/images/avatar/' . $tc_avatar;
+            }
 
             return json([
                 'code' => 200,
@@ -169,20 +172,16 @@ class Teacher extends Base {
         // 讲师状态
         $status = abs($param['tc_status'] - 1);
 
-        $result = Db::name('teacher')
+        Db::name('teacher')
             ->where(['tc_id' => $tc_id])
             ->update(['tc_status' => $status]);
 
-        if($result) {
-            return json([
-                'code' => 200,
-                'msg' => 'OK',
-                'result' => ['tc_status' => $status],
-                'time' => time()
-            ]);
-        }
-
-        abort(500, 'Internal Server Error');
+        return json([
+            'code' => 200,
+            'msg' => 'OK',
+            'result' => ['tc_status' => $status],
+            'time' => time()
+        ]);
     }
 
     // 修改讲师资料
@@ -211,20 +210,16 @@ class Teacher extends Base {
         $param['tc_join_date'] = strtotime($param['tc_join_date']);
         $param['tc_birthday'] = strtotime($param['tc_birthday']);
 
-        // 写放数据库
-        $result = Db::name('teacher')
+        // 写入数据库
+        Db::name('teacher')
             ->where(['tc_id' => $tc_id])
             ->update($param);
 
-        if($result) {
-            return json([
-                'code' => 200,
-                'msg' => 'OK',
-                'time' => time()
-            ]);
-        }
-
-        abort(500, 'Internal Server Error');
+        return json([
+            'code' => 200,
+            'msg' => 'OK',
+            'time' => time()
+        ]);
     }
 
     // 用户中心设置
@@ -236,7 +231,9 @@ class Teacher extends Base {
             ->field('tc_pass, tc_status, tc_type, tc_update_time', true)
             ->find($tc_id);
 
-        $result['tc_avatar'] = 'http://static.botue.com/images/avatar/' . $result['tc_avatar'];
+        if($result['tc_avatar']) {
+            $result['tc_avatar'] = 'http://static.botue.com/images/avatar/' . $result['tc_avatar'];
+        }
 
         $result['tc_birthday'] = date('Y-m-d', $result['tc_birthday']);
 
@@ -267,19 +264,15 @@ class Teacher extends Base {
             return abort(403, 'Forbidden');
         }
 
-        $result = Db::name('teacher')
+        Db::name('teacher')
             ->where(['tc_id' => $tc_login_id, 'tc_pass' => $tc_pass])
             ->update(['tc_pass' => $tc_new_pass]);
 
-        if($result) {
-            return json([
-                'code' => 200,
-                'msg' => 'OK',
-                'time' => time()
-            ]);
-        }
-
-        abort(500, 'Internal Server Error');
+        return json([
+            'code' => 200,
+            'msg' => 'OK',
+            'time' => time()
+        ]);
     }
 }
 

@@ -119,20 +119,16 @@ class Category extends Base {
 
         unset($param['tc_id']);
 
-        // 写放数据库
-        $result = Db::name('category')
+        // 写入数据库
+        Db::name('category')
             ->where(['cg_id' => $cg_id])
             ->update($param);
 
-        if($result) {
-            return json([
-                'code' => 200,
-                'msg' => 'OK',
-                'time' => time()
-            ]);
-        }
-
-        abort(500, 'Internal Server Error');
+        return json([
+            'code' => 200,
+            'msg' => 'OK',
+            'time' => time()
+        ]);
     }
 }
 

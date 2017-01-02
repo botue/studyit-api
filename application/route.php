@@ -14,4 +14,9 @@ return [
         'name' => '\w+',
     ],
 
+    'course/update/basic' => 'course/updateBasic',
+    'course/update/picture' => 'course/updatePicture'
 ];
+
+
+

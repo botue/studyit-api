@@ -1,8 +1,25 @@
 <?php
 namespace app\api\controller;
 
-class Advert {
+use think\Db;
+use think\Controller;
+use app\api\controller\Base;
+
+class Advert extends Base {
+
     public function index() {
-        return json(['msg' => '广告管理']);
+        return '111';
+    }
+
+    public function add() {
+        // 
+    }
+
+    public function edit() {
+        // 
+    }
+
+    public function modify() {
+        //
     }
 }
