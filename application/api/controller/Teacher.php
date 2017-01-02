@@ -231,7 +231,7 @@ class Teacher extends Base {
             ->field('tc_pass, tc_status, tc_type, tc_update_time', true)
             ->find($tc_id);
 
-        if(empty($result['tc_avatar'])) {
+        if(!empty($result['tc_avatar'])) {
             $result['tc_avatar'] = 'http://static.botue.com/images/avatar/' . $result['tc_avatar'];
         }
 
