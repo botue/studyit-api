@@ -145,7 +145,7 @@ class Teacher extends Base {
             $result['tc_birthday'] = date('Y-m-d', $tc_birthday);
             $result['tc_join_date'] = date('Y-m-d', $tc_join_date);
 
-            if($tc_avatar) {
+            if(!empty($tc_avatar)) {
                 $result['tc_avatar'] = 'http://static.botue.com/images/avatar/' . $tc_avatar;
             }
 
@@ -231,7 +231,7 @@ class Teacher extends Base {
             ->field('tc_pass, tc_status, tc_type, tc_update_time', true)
             ->find($tc_id);
 
-        if($result['tc_avatar']) {
+        if(empty($result['tc_avatar'])) {
             $result['tc_avatar'] = 'http://static.botue.com/images/avatar/' . $result['tc_avatar'];
         }
 
