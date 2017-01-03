@@ -20,7 +20,7 @@ class Login {
 
         if($result) {
 
-            if(empty($result['tc_avatar'])) {
+            if(!empty($result['tc_avatar'])) {
                 $result['tc_avatar'] = 'http://static.botue.com/images/avatar/' . $result['tc_avatar'];
             }
 
