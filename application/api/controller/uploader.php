@@ -98,7 +98,6 @@ class Uploader extends Base {
             echo $file->getError();
         }
     }
-
 }
 
 
