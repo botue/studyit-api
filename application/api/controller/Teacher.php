@@ -9,7 +9,7 @@ class Teacher extends Base {
     // 权限检测
     protected function checkType() {
         // 是否为管理员
-        $tc_type = $this->request->session()['loginfo']['tc_type'];
+        $tc_type = session('loginfo')['tc_type'];
 
         if($tc_type) {
             return abort(403, 'Forbidden');
@@ -188,7 +188,7 @@ class Teacher extends Base {
     public function modify() {
 
         // 读取登录信息
-        $loginfo = $this->request->session()['loginfo'];
+        $loginfo = session('loginfo');
 
         $tc_login_id = $loginfo['tc_id'];
 
@@ -225,7 +225,7 @@ class Teacher extends Base {
     // 用户中心设置
     public function profile() {
         // 登录id
-        $tc_id = $this->request->session()['loginfo']['tc_id'];
+        $tc_id = session('loginfo')['tc_id'];
 
         $result = Db::name('teacher')
             ->field('tc_pass, tc_status, tc_type, tc_update_time', true)
@@ -250,7 +250,7 @@ class Teacher extends Base {
     // 修改密码
     public function repass() {
         // 登录信息
-        $loginfo = $this->request->session()['loginfo'];
+        $loginfo = session('loginfo');
         $tc_login_pass = $loginfo['tc_pass'];
         $tc_login_id = $loginfo['tc_id'];
 
