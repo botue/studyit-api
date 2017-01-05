@@ -2,7 +2,6 @@
 namespace app\api\controller;
 
 use think\Db;
-use think\Controller;
 use app\api\controller\Base;
 
 class Teacher extends Base {

@@ -1,7 +1,9 @@
 <?php
 namespace app\api\controller;
 
-class Base {
+use think\Controller;
+
+class Base extends Controller {
 
     public function _initialize() {
         $this->checkLogin();
