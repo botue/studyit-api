@@ -1,18 +1,16 @@
 <?php
 namespace app\api\controller;
 
-use think\Controller;
-
-class Base extends Controller {
+class Base {
 
     public function _initialize() {
         $this->checkLogin();
     }
 
     public function checkLogin() {
-        $session = $this->request->session();
+        $session = session('loginfo');
 
-        if(!isset($session['loginfo'])) {
+        if(!$session) {
             abort(401, 'Unauthorized');
         }
     }

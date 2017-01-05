@@ -17,7 +17,7 @@ class Login {
             ->where($where)
             ->field('tc_id, tc_name, tc_pass, tc_type, tc_avatar')
             ->find();
-
+            
         if($result) {
 
             if(!empty($result['tc_avatar'])) {
