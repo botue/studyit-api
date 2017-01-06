@@ -81,8 +81,7 @@ class Teacher extends Base {
         $param['tc_join_date'] = strtotime($param['tc_join_date']);
 
         // 存入数据库
-        $result = Db::name('teacher')
-            ->insert($param);
+        $result = Db::name('teacher')->insert($param);
 
         if($result) {
             return json([

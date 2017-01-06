@@ -91,8 +91,7 @@ class Category extends Base {
         // 获取参数
         $param = $this->request->param();
 
-        $result = Db::name('category')
-            ->insert($param);
+        $result = Db::name('category')->insert($param);
 
         if($result) {
             return json([

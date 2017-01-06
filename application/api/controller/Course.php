@@ -147,6 +147,22 @@ class Course extends Base {
 
         $result = Db::query('select cs_id, cs_name, tc_name, cs_cover, cs_cover_original from course left join teacher on cs_tc_id=tc_id where cs_id='.$cs_id);
 
+        $lesson = Db::name('chapter')
+            ->field('ct_id, ct_name, ct_video_duration')
+            ->where(['ct_cs_id' => $cs_id])
+            ->select();
+
+        $cs_cover = $result[0]['cs_cover'];
+        $cs_cover_original = $result[0]['cs_cover_original'];
+
+        if($cs_cover) {
+            $result[0]['cs_cover'] = 'http://static.botue.com/images/cover/' . $cs_cover_original . '?' . $cs_cover;
+
+            unset($result[0]['cs_cover_original']);
+        }
+
+        $result[0]['lessons'] = $lesson;
+
         return json([
             'code' => 200,
             'msg' => 'OK',
