@@ -2,7 +2,6 @@
 namespace app\api\controller;
 
 use think\Db;
-use think\Controller;
 use app\api\controller\Base;
 
 class Category extends Base {
@@ -63,6 +62,28 @@ class Category extends Base {
         }
 
         abort(500, 'Internal Server Error');
+    }
+
+    // 子分类
+    public function child() {
+
+        $cg_id = $this->request->param()['cg_id'];
+
+        $result = Db::name('category')
+            ->field('cg_id, cg_name')
+            ->where(['cg_pid' => $cg_id])
+            ->select();
+
+        if($result) {
+            return json([
+                'code' => 200,
+                'msg' => 'OK',
+                'result' => $result,
+                'time' => time()
+            ]);
+
+            abort(500, 'Internal Server Error');
+        }
     }
 
     // 添加分类

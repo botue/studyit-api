@@ -2,7 +2,6 @@
 namespace app\api\controller;
 
 use think\Db;
-use think\Controller;
 use app\api\controller\Base;
 
 class Course extends Base {
@@ -10,7 +9,7 @@ class Course extends Base {
     // 权限检测
     protected function checkType() {
         // 是否为管理员
-        $tc_type = $this->request->session()['loginfo']['tc_type'];
+        $tc_type = session('loginfo')['tc_type'];
 
         if($tc_type) {
             return abort(403, 'Forbidden');
@@ -25,7 +24,7 @@ class Course extends Base {
     public function create() {
 
         // 登陆信息
-        $loginfo = $this->request->session()['loginfo'];
+        $loginfo = session('loginfo');
 
         // 接收提交参数
         $param = $this->request->param();
@@ -54,7 +53,7 @@ class Course extends Base {
     // 基本信息
     public function basic() {
         // 登陆信息
-        $loginfo = $this->request->session()['loginfo'];
+        $loginfo = session('loginfo');
 
         $param = $this->request->param();
 
