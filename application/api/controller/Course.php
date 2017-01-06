@@ -16,8 +16,27 @@ class Course extends Base {
         }        
     }
 
+    // 课程列表
     public function index() {
-        return json(['msg' => '课程管理']);
+        
+        $result = Db::query('select cs_id, cs_name, cs_cover, cs_cover_original, tc_name, cg_name from course left join teacher on cs_tc_id=tc_id left join category on cs_cg_id=cg_id');
+
+        if($result) {
+            for($i=0; $i<count($result); $i++) {
+                $result[$i]['cs_cover'] = 'http://static.botue.com/images/cover/' . $result[$i]['cs_cover_original'] . '?' . $result[$i]['cs_cover'];
+
+                unset($result[$i]['cs_cover_original']);
+            }
+
+            return json([
+                'code' => 200,
+                'msg' => 'OK',
+                'result' => $result,
+                'time' => time()
+            ]);
+        }
+
+        abort(500, 'Internal Server Error');
     }
 
     // 课程名称
