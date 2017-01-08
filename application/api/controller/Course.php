@@ -86,7 +86,7 @@ class Course extends Base {
             if($loginfo['tc_type'] == 0) {
                 $teacher = Db::name('teacher')
                     ->field('tc_id, tc_name')
-                    ->where('tc_type <> 0')
+                    // ->where('tc_type <> 0')
                     ->select();            
             }
 
