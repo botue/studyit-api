@@ -11,18 +11,18 @@ class Dashboard extends Base {
         // 模拟数据
         $data = [
             'title' => [
-                'text' => 'ECharts 入门示例'
+                'text' => '课程数量'
             ],
             'tooltip' => ['' =>''],
             'legend' => [
-                'data' => ['销量']
+                'data' => ['数量']
             ],
             'xAxis' => [
-                'data' => ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+                'data' => ["HTML","CSS","Mobile","Angular","vue","Nodejs"]
             ],
             'yAxis' => ['' => ''],
             'series' => [[
-                'name' => '销量',
+                'name' => '数量',
                 'type' => 'bar',
                 'data' => [5, 20, 36, 10, 10, 20]
             ]]
