@@ -220,6 +220,29 @@ class Teacher extends Base {
         ]);
     }
 
+    // 更新讲师信息
+    public function update() {
+
+        $param = $this->request->param();
+
+        $tc_id = $param['tc_id'];
+        unset($param['tc_id']);
+        
+        $param['tc_join_date'] = strtotime($param['tc_join_date']);
+
+        Db::name('teacher')
+            ->where(['tc_id' => $tc_id])
+            ->update($param);
+
+        return json([
+            'code' => 200,
+            'msg' => 'OK',
+            'time' => time()
+        ]);
+
+        abort(500, 'Internal Server Error');
+    }
+
     // 用户中心设置
     public function profile() {
         // 登录id
