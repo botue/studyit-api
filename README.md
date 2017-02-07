@@ -33,23 +33,27 @@ mkdir runtime && chmod 777 runtime
 ```bash
 # 根目录
 DocumentRoot "yourpath/api/public"
+```
 
-#默认索引
+5、默认索引
+
+```bash
 <IfModule dir_module>
     DirectoryIndex index.php index.html
 </IfModule>
 ```
 
-5、数据库支持
+6、数据库支持
 
 修改php配置文件`php.ini`
 
 ```bash
 #去掉分号
+;extension=php_mysql.dll
 ;extension=php_pdo_mysql.dll
 ```
 
-6、开启宽字符集支持
+7、开启宽字符集支持
 
 ```bash
 #去掉分号
