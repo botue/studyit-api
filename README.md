@@ -4,7 +4,10 @@
 
 1.启用rewrite
 
-\# LoadModule rewrite_module modules/mod_rewrite.so 去除前面的 \#
+```bash
+#去掉分号
+#LoadModule rewrite_module modules/mod_rewrite.so
+```
 
 2.启用.htaccess
 
