@@ -16,3 +16,36 @@ AllowOverride None    修改为： AllowOverride All
 ```bash
 mkdir runtime && chmod 777 runtime
 ```
+
+4、配置根目录
+
+将网站根目录设置到`api/public`，默认索引设置为index.php
+
+```bash
+# 根目录
+DocumentRoot "yourpath/api/public"
+
+#默认索引
+<IfModule dir_module>
+    DirectoryIndex index.php index.html
+</IfModule>
+```
+
+5、数据库支持
+
+修改php配置文件`php.ini`
+
+```bash
+#去掉分号
+;extension=php_pdo_mysql.dll
+```
+
+6、开启宽字符集支持
+
+```bash
+#去掉分号
+;extension=php_mbstring.dll
+```
+
+
+
