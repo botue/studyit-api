@@ -11,8 +11,14 @@
 
 2.启用.htaccess
 
-在虚拟机配置项中
-AllowOverride None    修改为： AllowOverride All
+在虚拟主机配置项中
+
+```bash
+AllowOverride None
+
+#修改为
+AllowOverride All
+```
 
 3.linux 或 mac 环境下
 
