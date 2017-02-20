@@ -18,7 +18,9 @@ define('BIND_MODULE','api');
 
 $requestUri = $_SERVER['REQUEST_URI'];
 
-$dbName = empty(explode('/', $requestUri)[1]) ? 'bxg' : explode('/', $requestUri)[1];
+$dbName = empty(explode('/', $requestUri)[1]) ?
+    'bxg' : !strstr(explode('/', $requestUri)[1], 'v') ?
+    'bxg' : explode('/', $requestUri)[1];
 
 define('DB_NAME', $dbName);
 
