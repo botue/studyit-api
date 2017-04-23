@@ -59,6 +59,13 @@ class Category extends Base {
                 return $result;
             }
 
+        } else {
+            return json([
+                'code' => 200,
+                'msg' => 'OK',
+                'result'=> [],
+                'time' => time()
+            ]);
         }
 
         abort(500, 'Internal Server Error');
